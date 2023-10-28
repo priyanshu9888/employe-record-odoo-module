@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="employee_records_view_kanban" model="ir.ui.view">
+        <field name="name">employee.record.kanban</field>
+        <field name="model">employee.record</field>
+        <field name="arch" type="xml">
+
+            <kanban group_by="desigination">
+
+
+                <field name="name"/>
+                <field name="desigination"/>
+                <field name="employee_dob"/>
+                <field name="employee_gender"/>
+                <field name="email"/>
+                <field name="phone"/>
+                <field name="id"/>
+                <field name="employee_image"/>
+                <templates>
+                    <t t-name="kanban-box">
+
+                        <div t-attf-class="oe_kanban_global_click o_kanban_record_has_image_fill">
+                            <div class="o_kanban_image d-none d-md-block"
+                                 t-attf-style="background-image:url('#{kanban_image('employee.record','employee_image',record.id.raw_value)}') ">
+
+                                <img class="o_kanban_image_inner_pic"/>
+                                <!--                                 t-att-src="kanban_image('employee.record','employee_image',record.id.raw_value)"/>-->
+                            </div>
+                            <div class="oe_kanban_details ">
+                                <ul>
+
+                                    <li>
+                                        Name :
+                                        <strong>
+                                            <field name="name"/>
+                                        </strong>
+                                    </li>
+
+                                    <li>
+                                        Designation :
+                                        <field name="desigination"/>
+                                    </li>
+
+
+
+                                    <li>
+                                        Gender :
+                                        <field name="employee_gender"/>
+                                    </li>
+
+
+                                </ul>
+
+                            </div>
+                        </div>
+
+
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+
+    <data>
+        <record id="employee_records_view_form" model="ir.ui.view">
+            <field name="name">employee.record.form</field>
+            <field name="model">employee.record</field>
+            <field name="arch" type="xml">
+
+                <form string="Lost Reason">
+                    <header>
+                        <field name="state" widget="statusbar" statusbar_visible="new,used"/>
+                        <button name="delete_method" string="Delete" class="oe_highlight"  type="object"   />
+                        <button name="state_changer" states="new,used" string="state changer" type="object"/>
+                    </header>
+                    <sheet>
+                        <group>
+
+                            <field name="name"/>
+                            <field name="desigination"/>
+                            <field name="employee_dob"/>
+                            <field name="employee_gender"/>
+                            <field name="email"/>
+                            <field name="phone"/>
+                            <field name="user_id" domain="[('share', '=', False)]" position="after" widget="selection"/>
+
+<!--                            <field name="user_id"/>-->
+                            <field name="employee_image" class="oe_avatar" widget="image"/>
+                        </group>
+ <xpath expr="//field[@name='user_id']" position="inside" widget="selection">
+                    <field name="user_id" widget="selection"/>
+                </xpath>
+
+                    </sheet>
+
+                    <div class="oe_chatter">
+						<field name="message_follower_ids"/>
+						<field name="activity_ids"/>
+						<field name="message_ids"/>
+					</div>
+                </form>
+            </field>
+        </record>
+
+        <record id="act_employee_records_view_form" model="ir.actions.act_window">
+            <field name="name">Employee Form</field>
+            <field name="res_model">employee.record</field>
+            <field name="context">{'group_by':'desigination'}</field>
+            <field name="view_mode">tree,form,kanban</field>
+        </record>
+
+        <menuitem
+                id="employee_record_menu_main"
+                name="Employee Records"
+                web_icon="employe-records,static/description/icon.png"
+                action="employe-records.act_employee_records_view_form"
+                sequence="6"/>
+    </data>
+</odoo>

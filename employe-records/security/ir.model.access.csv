@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_group_user,Access User,model_employee_record,base.group_user,1,1,1,1
+access_group_user,Access User,model_employee_record,base.group_user,1,1,1,1
+access_delete_wizard_all,Delete All,model_delete_dialouge_wizard,,1,1,1,1
